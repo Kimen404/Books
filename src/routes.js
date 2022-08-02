@@ -12,7 +12,7 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/books/{name?,reading?,finished?}',
+    path: '/books/{[name?,reading?,finished?]}',
     handler: getAllBookHandler,
   },
   {

@@ -39,7 +39,7 @@ const addBookHandler = (request, h) => {
     updatedAt,
   };
     // ERORR TIDAK MEMASUKAN NAMA
-  if (name === '') {
+  if (name === undefined) {
     const response = h.response({
       status: 'fail',
       message: 'Gagal menambahkan buku. Mohon isi nama buku',
@@ -62,7 +62,7 @@ const addBookHandler = (request, h) => {
   if (isSuccess) {
     const response = h.response({
       status: 'success',
-      message: 'Catatan berhasil ditambahkan',
+      message: 'Buku berhasil ditambahkan',
       data: {
         bookId: id,
       },
@@ -80,11 +80,14 @@ const addBookHandler = (request, h) => {
 };
 // --------------------------------------------------------- MENAMPILKAN SELURUH BUKU
 const getAllBookHandler = (request, h) => {
-  const { name, reading, finished } = request.query;
+  const {
+    id, name, reading, finished,
+  } = request.query;
 
   const bookName = books.filter((n) => n.name === name)[0];
   const isReading = books.filter((r) => r.reading === true);
   const isFinished = books.filter((f) => f.reading === finished);
+  const book = books.filter((n) => n.id === id)[0];
 
   if (bookName !== undefined) {
     return {
@@ -105,6 +108,13 @@ const getAllBookHandler = (request, h) => {
       status: 'success',
       data: {
         isFinished,
+      },
+    };
+  } if (book !== undefined) {
+    return {
+      status: 'success',
+      data: {
+        book,
       },
     };
   }
@@ -163,27 +173,27 @@ const editBookByIdHandler = (request, h) => {
   return response;
 };
 // -------------------------------------------------MENAMPILKAN DETAIL BUKU
-const getBookByIdHandler = (request, h) => {
-  const { id } = request.params;
+// const getBookByIdHandler = (request, h) => {
+//   const { id } = request.params;
 
-  const book = books.filter((n) => n.id === id)[0];
+//   const book = books.filter((n) => n.id === id)[0];
 
-  if (book !== undefined) {
-    return {
-      status: 'success',
-      data: {
-        book,
-      },
-    };
-  }
+//   if (book !== undefined) {
+//     return {
+//       status: 'success',
+//       data: {
+//         book,
+//       },
+//     };
+//   }
 
-  const response = h.response({
-    status: 'fail',
-    message: 'Buku tidak ditemukan',
-  });
-  response.code(404);
-  return response;
-};
+//   const response = h.response({
+//     status: 'fail',
+//     message: 'Buku tidak ditemukan',
+//   });
+//   response.code(404);
+//   return response;
+// };
 // --------------------------------------------------- DELETE BOOK
 const deleteBookByIdHandler = (request, h) => {
   const { id } = request.params;
@@ -211,7 +221,7 @@ const deleteBookByIdHandler = (request, h) => {
 module.exports = {
   addBookHandler,
   getAllBookHandler,
-  getBookByIdHandler,
+  // getBookByIdHandler,
   editBookByIdHandler,
   deleteBookByIdHandler,
 };

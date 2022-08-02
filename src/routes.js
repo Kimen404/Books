@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 const {
   // eslint-disable-next-line max-len
-  addBookHandler, getAllBookHandler, getBookByIdHandler, editBookByIdHandler, deleteBookByIdHandler,
+  addBookHandler, getAllBookHandler, /* getBookByIdHandler, */ editBookByIdHandler, deleteBookByIdHandler,
 } = require('./handler');
 
 const routes = [
@@ -12,7 +12,7 @@ const routes = [
   },
   {
     method: 'GET',
-    path: '/books/{name?}',
+    path: '/books/{bookId}/{name?}',
     handler: getAllBookHandler,
   },
   {
@@ -20,11 +20,11 @@ const routes = [
     path: '/books/{bookId}',
     handler: editBookByIdHandler,
   },
-  {
-    method: 'GET',
-    path: '/books/{bookId}',
-    handler: getBookByIdHandler,
-  },
+  // {
+  //   method: 'GET',
+  //   path: '/books/{bookId}',
+  //   handler: getBookByIdHandler,
+  // },
   {
     method: 'DELETE',
     path: '/books/{bookId}',
